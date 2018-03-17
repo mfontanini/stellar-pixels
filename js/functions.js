@@ -414,9 +414,10 @@ class EventsArea {
         }
         var localTime = new Date(time);
         // Prepend the option
-        this.element.prepend($('<option>', {
-            text: this.dateToString(localTime) + ": " + text,
-            style: 'color: ' + color
+        this.element.prepend($('<li>', {
+            text: this.dateToString(localTime) + ': ' + text,
+            style: 'color: ' + color,
+            class: 'list-group-item events-area-item'
         }));
         // Now remove any options beyond the configured amount
         var maxElements = this.maxElements;

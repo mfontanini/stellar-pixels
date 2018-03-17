@@ -131,8 +131,16 @@ body {
   overflow-y: scroll;
 }
 
+.scroll-div-y {
+  overflow-y: scroll;
+}
+
 .expand-height {
   height: 100vh;
+}
+
+.events-area-item {
+  padding: 3px 10px
 }
 
 #main-div {
