@@ -18,11 +18,11 @@
       <a class="navbar-brand nav-align pl-3" href="#">Stellar Pixels</a>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="btn btn-info px-1 py-1" id="github-button" href="https://github.com/mfontanini/stellar-pixels">
+          <a class="btn btn-info px-1 py-1" id="github-button" href="https://github.com/mfontanini/stellar-pixels" title="View source code on github">
             <input type="image" src="images/octocat.png" />
           </a>
-          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#help-modal">Help</button>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal" id="set-seed-button">Set seed</button>
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#help-modal" title="See instructions">Help</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal" id="set-seed-button" title="Set your stellar account seed">Set seed</button>
         </li>
       </ul>
     </nav>
@@ -33,14 +33,14 @@
             <ul class="nav flex-column nav-align pt-0 mt-0">
               <li class="nav-item">
                 <div class="card">
-                  <div class="card-header text-center">
+                  <div class="card-header text-center" title="The color that will be used for the next pixel you paint">
                     <input id="colorPicker" />
                   </div>
                 </div>
               </li>
               <li class="nav-item">
                 <div class="card">
-                  <div class="card-header text-center" id="queued-events-heading">
+                  <div class="card-header text-center" id="queued-events-heading" title="The list of pending requests to paint a pixel">
                     <button class="btn btn-link font-weight-none" data-toggle="collapse" id="queued-events-button" data-target="#queued-events-collapse" aria-expanded="true" aria-controls="collapseOne">
                       Pending requests <span class="badge badge-light" id="queued-events-count">0</span>
                     </button>
@@ -54,7 +54,7 @@
               </li>
               <li class="nav-item">
                 <div class="card">
-                  <div class="card-header input-group input-group-sm">
+                  <div class="card-header input-group input-group-sm" title="Amount of XLM sent per pixel you click">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="lumens-amount-label">XLM/Pixel</span>
                     </div>
@@ -64,7 +64,7 @@
               </li>
               <li class="nav-item">
                 <div class="card">
-                  <div class="card-header input-group input-group-sm">
+                  <div class="card-header input-group input-group-sm" title="The memo that will be used on a transaction">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="memo-label">Current memo</span>
                     </div>
@@ -74,7 +74,7 @@
               </li>
               <li class="nav-item">
                 <div class="card">
-                  <div class="card-header input-group input-group-sm">
+                  <div class="card-header input-group input-group-sm" title="The address of the board in case you want to send XLM from your wallet">
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="board-address-label">Board address</span>
                     </div>
