@@ -440,6 +440,7 @@ StellarSdk.Network.usePublicNetwork();
 var horizonEndpoint = 'https://horizon.stellar.org';
 var horizonServer = new StellarSdk.Server(horizonEndpoint);
 var boardAddress = 'GA3DNX4WYHGARHXLJF4X2YKGXCVIRW6OQBQR6OA7BMHFAP77GUBLIAB6';
+var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 function setupBoard(width, height, pixelSize, stellar) {
     var element = document.createElement('canvas');
@@ -465,6 +466,10 @@ function setupBoard(width, height, pixelSize, stellar) {
 
     window.board = new Board(width, height, pixelSize, element, stellar);
     window.drawingState = new DrawingState(board, colorPicker, $('#memo-display'), stellar);
+    if (isMobile) {
+        $('#board-div').addClass('scroll-div');
+        $('#events-area-div').addClass('scroll-div');
+    }
 }
 
 function setupStellar( callback) {

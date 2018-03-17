@@ -119,6 +119,7 @@ body {
 }
 
 .scroll-div {
+  overflow-x: scroll;
   overflow-y: scroll;
 }
 
