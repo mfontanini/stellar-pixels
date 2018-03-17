@@ -106,6 +106,13 @@ body {
   width: 270px;
 }
 
+@media only screen and (max-width: 600px) {
+    .nav-align {
+      width: auto;
+      padding: .75rem;
+    }
+}
+
 /*
  * Utilities
  */
