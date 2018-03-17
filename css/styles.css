@@ -107,11 +107,11 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-    .nav-align {
-      width: auto;
-      padding: .75rem;
-      font-size: .75rem;
-    }
+  .nav-align {
+    width: auto;
+    padding: .75rem;
+    font-size: .75rem;
+  }
 }
 
 /*
