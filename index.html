@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Spectrum color picker -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Stellar Pixels</title>
+  </head>
+  <body>
+    <nav class="navbar sticky-top flex-md-nowrap p-0">
+      <a class="navbar-brand nav-align pl-3" href="#">Stellar Pixels</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="btn btn-info px-1 py-1" id="github-button" href="https://github.com/mfontanini/stellar-pixels">
+            <input type="image" src="images/octocat.png" />
+          </a>
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#help-modal">Help</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal" id="set-seed-button">Set seed</button>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column nav-align pt-0 mt-0">
+              <li class="nav-item">
+                <div class="card">
+                  <div class="card-header text-center">
+                    <input id="colorPicker" />
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="card">
+                  <div class="card-header text-center" id="queued-events-heading">
+                    <button class="btn btn-link font-weight-none" data-toggle="collapse" id="queued-events-button" data-target="#queued-events-collapse" aria-expanded="true" aria-controls="collapseOne">
+                      Pending requests <span class="badge badge-light" id="queued-events-count">0</span>
+                    </button>
+                  </div>
+                  <div id="queued-events-collapse" class="collapse" aria-labelledby="queued-events-heading">
+                    <div class="card-body text-center" id="queued-events-body">
+                      No requests in line
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="card">
+                  <div class="card-header input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="lumens-amount-label">XLM/Pixel</span>
+                    </div>
+                    <input type="number" class="form-control text-center" aria-label="Small" aria-describedby="lumens-amount-label" id="lumens-amount-display" value="0.0000001" step="0.0000001">
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="card">
+                  <div class="card-header input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="memo-label">Current memo</span>
+                    </div>
+                    <input type="text" class="form-control text-center" aria-label="Small" aria-describedby="memo-label" id="memo-display" disabled>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="card">
+                  <div class="card-header input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="board-address-label">Board address</span>
+                    </div>
+                    <input disabled type="text" class="form-control text-center" aria-label="Small" aria-describedby="board-address-label" id="board-address" disabled>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 expand-height" id="main-div">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+            <div id="board-div" class="mx-auto"></div>
+          </div>
+          <div class="col-md-auto pb-3 pt-1">
+            <p class="h4 text-center font-weight-bold">Events</p>
+            <select multiple class="form-control mx-auto" id="events-area"></select>
+          </div>
+      </div>
+    </div>
+
+    <!-- log in modal -->
+    <div id="login-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Seed</h4>
+            <button type="button" class="close" data-dismiss="modal" id="login-close-button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <input id="seed-input" type="text" class="form-control" placeholder="Enter account seed">
+              <small class="form-text text-muted">
+                The seed will never leave your computer.
+              </small>
+              <p class="text-danger text-center pt-2" id="login-invalid-feedback"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="login-button">Set seed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- help modal -->
+    <div id="help-modal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Help</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body scroll-div">
+            <span class="font-weight-bold">What is this?</span>
+            <p>
+              This is an interactive and distributed painting application. Users can use
+              <a href="https://www.stellar.org/">Stellar Lumens</a> transactions to indicate the
+              coordinates and color they want to paint. The painted pixels will be loaded
+              automatically by any users currently viewing the website.
+            </p>
+            <span class="font-weight-bold">Why does this use Stellar?</span>
+            <p>
+              Stellar's transactions can contain text memos which allows encoding extra information
+              on each payment you make (in this case the coordinates and color to paint). Transactions
+              are also extremely cheap so you will never be worried about pixels having a high cost.
+              Moreover, transactions get confirmed in a matter of seconds so you can immediately
+              propagate the pixels you paint into the rest of the users.
+            </p>
+            <p>
+              Pixels painted will live forever in the Stellar ledger so no matter what graffiti
+              you want to come up with, that will always be accessible as long as nobody writes
+              on top of it.
+            </p>
+            <span class="font-weight-bold">Why would I trust you with my private key?</span>
+            <p>
+              You don't have to trust me. The code used here is
+              <a href="https://github.com/mfontanini/stellar-pixels">open source</a> and hosted on github
+              so you can have a look at the <a href="js/functions.js">single javascript file</a>
+              this project contains and evaluate whether you want to use it or not. The rest of 
+              the javascript code used (bootstrap, jquery, etc) is pulled fron public links (e.g. cdnjs)
+              so that you don't have to go through the entirety of it to make sure there's not some
+              hidden code to steal your coins. Your private key <span class="font-weight-bold">will
+              never leave your computer</span> as this is purely a javascript website and there's
+              no backend to it (besides the Stellar network, that is).
+            </p>
+            <p>
+              I would recommend that you create a new address just for this game. Send it a couple of
+              XLM, paint some pixels and then
+              <a href="https://www.lumenauts.com/tutorials/how-to-merge-multiple-stellar-accounts">merge the account</a>
+              back into your main one. With a single XLM you can paint around 99000 pixels o that's
+              more than enough.
+            </p>
+            <p>
+              If you still don't trust me, you can still use the application from your own wallet.
+              Just send a transaction containing a memo with the format "&lt;x-coordinate&gt; &lt;y-coordinate&gt; &lt;color&gt;"
+              (where color has to be in the <a href="https://www.w3schools.com/colors/colors_hexadecimal.asp">hex format</a>
+              without the "#" character). e.g. if you want to paint the pixel at <code>(X = 0, Y = 20)</code> 
+              using the color green, send a payment with any amount of XLM to the application's
+              Stellar address with the following memo:
+            </p>
+            <p>
+              <code>0 20 00ff00</code>
+            </p>
+            <p>
+              You can have a look at the "current memo" field in the left panel to check what the 
+              memo would be for the pixel you're currently hovering your mouse on.
+            </p>
+            <span class="font-weight-bold">How do I paint pixels using this website?</span>
+            <p>
+              Once you've set your account seed in the application just click anywhere in the 
+              board to paint a pixel. You can select a color using the color picker on the left
+              panel or by right clicking on an existing pixel to select that same color for future
+              clicks.
+            </p>
+            <span class="font-weight-bold">Why does it take a few seconds to paint each pixel?</span>
+            <p>
+              Memos on Stellar are a property of a transaction, not a payment. That means we can
+              only paint one pixel per transaction and a single account can't have multiple 
+              transactions in progress due to the way sequence numbers work. A solution would be
+              to implement <a href="https://www.stellar.org/developers/guides/channels.html">channels</a>
+              but I don't think silently adding additional signers to whichever account the user
+              is using is a good idea.
+            </p>
+            <span class="font-weight-bold">Fees per pixel</span>
+            <p>
+              There's no restriction on how many XLM you want to send. By default the application
+              will send the minimum amount the Stellar network supports which is 0.0000001 XLM.
+              If you feel like being more generous, you can increase the amount you want to send
+              on the "XLM/Pixel" control on the left bar. Note that all payments are equal:
+              if you send 10 XLM and someone paints on top of your pixel by sending 1 XLM,
+              your pixel will be overwritten. 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.js" integrity="sha384-ZLFqobQQtphXg0EkBNEhn6PWrsETu9TotgyqNGtuSC6j108/jAvBOUpCUysC9iMp" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js" integrity="sha384-Uh/8a0iyk8ZUsfG3mwPi2VLwe62eIA2qgpHghB19z0RPx/AZ6MxHvNTRuCfKwn7H" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    
+    <script type="text/javascript">
+      $(function() {
+        setupControls();
+        loadState();
+      });
+    </script>
+  </body>
+</html>
