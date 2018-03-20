@@ -258,9 +258,8 @@ class StellarInterface {
         else {
             var eventList = '';
             for (var i = 0; i < this.pendingOperations.length; ++i) {
-                eventList += this.pendingOperations[i][2] + " @ ("
-                             + this.pendingOperations[i][0] + ", "
-                             + this.pendingOperations[i][1] + ")<br />";
+                var operation = this.pendingOperations[i];
+                eventList = `${operation[2]} @ (${operation[0]}, ${operation[1]}) <br />`;
             }
             this.queuedEventsBody.html(eventList);
         }
@@ -316,12 +315,12 @@ class StellarInterface {
     }
     
     memoEncode(x, y, color) {
-        return x + ' ' + y + ' ' + color.substring(1);
+        return `${x} ${y} ${color.substring(1)}`;
     }
 
     sendPixel(x, y, color) {
         if (this.isPixelPending(x, y)) {
-            console.log('Ignoring duplicate operation for (' + x + ', ' + y + ')');
+            console.log(`Ignoring duplicate operation for (${x}, ${y})`);
             return;
         }
         var operation = [x, y, color];
@@ -336,7 +335,7 @@ class StellarInterface {
 
     streamEvents(startCursor, lastKnownCursor, callback) {
         var self = this;
-        console.log('Starting event consumption from cursor ' + startCursor);
+        console.log(`Starting event consumption from cursor ${startCursor}`);
 
         // If we're starting at the last cursor then we basically are done loading everything
         if (startCursor == lastKnownCursor) {
@@ -379,7 +378,7 @@ class StellarInterface {
             if (parsed) {
                 var x = Number(parsed[1]);
                 var y = Number(parsed[2]);
-                board.setColor(x, y, '#' + parsed[3]);
+                board.setColor(x, y, `#${parsed[3]}`);
                 board.renderPixel(x, y);
 
                 this.eventsArea.addPaintEvent(
@@ -403,9 +402,9 @@ class EventsArea {
         var expandNumber = function(number) {
             return ('0' + number).slice(-2);
         };
-        return expandNumber(date.getDay()) + "/" + expandNumber(date.getMonth()) + "/" +
-               expandNumber(date.getFullYear()) + " " + expandNumber(date.getHours()) + ":" +
-               expandNumber(date.getMinutes()) + ":" + expandNumber(date.getSeconds());
+        return `${expandNumber(date.getDay())}/${expandNumber(date.getMonth())}/` +
+               `${expandNumber(date.getFullYear())} ${expandNumber(date.getHours())}:` +
+               `${expandNumber(date.getMinutes())}:${expandNumber(date.getSeconds())}`;
     }
 
     addText(text, color, time) {
@@ -415,8 +414,8 @@ class EventsArea {
         var localTime = new Date(time);
         // Prepend the option
         this.element.prepend($('<li>', {
-            text: this.dateToString(localTime) + ': ' + text,
-            style: 'color: ' + color,
+            text: `${this.dateToString(localTime)}: ${text}`,
+            style: `color: ${color}`,
             class: 'list-group-item events-area-item'
         }));
         // Now remove any options beyond the configured amount
@@ -427,12 +426,12 @@ class EventsArea {
     }
 
     addPaintEvent(time, account, x, y) {
-        var eventText = account + " painted (" + x + ", " + y + ")\n";
+        var eventText = `${account} painted (${x}, ${y})\n`;
         this.addText(eventText, '#00a800', time);
     }
 
     addTransactionFailEvent(time, x, y, reason) {
-        var eventText = "Transaction for (" + x + ", " + y + ") failed: " + reason + "\n";
+        var eventText = `Transaction for (${x}, ${y}) failed: ${reason}\n`;
         this.addText(eventText, '#f22b10', time);
     }
 }
@@ -553,7 +552,7 @@ function loadState() {
                 var state = data['state'];
                 for (var x = 0; x < state.length; ++x) {
                     for (var y = 0; y < state[x].length; ++y) {
-                        board.setColor(x, y, '#' + state[x][y]);
+                        board.setColor(x, y, `#${state[x][y]}`);
                     }
                 }
                 var cursor = data['cursor'];
