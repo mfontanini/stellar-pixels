@@ -14,7 +14,6 @@ body {
  */
 
 .sidebar {
-  position: fixed;
   bottom: 0;
   left: 0;
   z-index: 100; /* Behind the navbar */
@@ -27,9 +26,7 @@ body {
   position: -webkit-sticky;
   position: sticky;
   background-color: #3dbb95;
-  top: 48px; /* Height of navbar */
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
+  height: 100vh;
   overflow-x: hidden;
 }
 
@@ -139,6 +136,10 @@ body {
   height: 100vh;
 }
 
+.expand-width {
+  width: 100vw;
+}
+
 .events-area-item {
   padding: 3px 10px
 }
@@ -149,6 +150,7 @@ body {
 
 #board-div {
   border: 4px solid black;
+  overflow: hidden;
 }
 
 #board {
