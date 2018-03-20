@@ -83,8 +83,9 @@ class Board {
 
     computeCoordinates(absoluteX, absoluteY) {
         var rect = this.canvas.getBoundingClientRect();
-        var x = (absoluteX - rect.left - 2) - this.pixelSize / 2;
-        var y = (absoluteY - rect.top - 2.5) - this.pixelSize / 2;
+        console.log(absoluteY - rect.top);
+        var x = (absoluteX - rect.left);
+        var y = (absoluteY - rect.top);
         return {
             x : parseInt(x / this.pixelSize),
             y : parseInt(y / this.pixelSize)

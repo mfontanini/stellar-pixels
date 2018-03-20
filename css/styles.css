@@ -147,8 +147,12 @@ body {
   background-color: #314587;
 }
 
-#board {
+#board-div {
   border: 4px solid black;
+}
+
+#board {
+  vertical-align: bottom;
 }
 
 #events-area {
