@@ -402,7 +402,7 @@ class EventsArea {
         var expandNumber = function(number) {
             return ('0' + number).slice(-2);
         };
-        return `${expandNumber(date.getDay())}/${expandNumber(date.getMonth())}/` +
+        return `${expandNumber(date.getDate())}/${expandNumber(date.getMonth() + 1)}/` +
                `${expandNumber(date.getFullYear())} ${expandNumber(date.getHours())}:` +
                `${expandNumber(date.getMinutes())}:${expandNumber(date.getSeconds())}`;
     }
